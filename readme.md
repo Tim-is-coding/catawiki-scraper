@@ -18,7 +18,7 @@ The following command can be used to automatically start and configure the appli
 **Linux or mac terminal:**
 
 ```
-$ chmod a+rx my-script.sh
+$ chmod a+rx start.sh
 $ ./start.sh
 ```
 
