@@ -9,7 +9,8 @@ Search requests can be defined and the software will automatically send an email
 
 1. [x] `docker` installed on your machine
 2. [x] `docker-compose` installed on your machine
-3. [x] A Gmail account with API access activates and your API key
+3. [x] `mvn` installed on your machine
+4. [x] A Gmail account with API access activates and your API key
 
 ## How to start the application
 
