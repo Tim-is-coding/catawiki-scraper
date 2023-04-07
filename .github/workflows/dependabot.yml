@@ -7,5 +7,6 @@ on:
 jobs:
   scan:
     steps:
-      - uses: advanced-security/maven-dependency-submission-action@v3.0.0
       - name: Scan dependencies
+        uses: advanced-security/maven-dependency-submission-action@v3.0.0
+
