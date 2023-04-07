@@ -6,6 +6,7 @@ on:
     branches: [ "main" ]
 jobs:
   scan:
+    runs-on: ubuntu-latest
     steps:
       - name: Scan dependencies
         uses: advanced-security/maven-dependency-submission-action@v3.0.0
