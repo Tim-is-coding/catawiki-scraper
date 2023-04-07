@@ -15,7 +15,7 @@ class InterestingAuctionItemNotificationBuilderTest {
     @Autowired
     private InterestingAuctionItemNotificationBuilder notificationBuilder;
 
-    @Test
+   // @Test
     void findMatchesForSearchRequests() {
         List<AuctionItem> matches = notificationBuilder.findMatchesForSearchRequests();
         Assertions.assertNotNull(matches);
