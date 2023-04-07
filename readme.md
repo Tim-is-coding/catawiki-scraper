@@ -7,8 +7,9 @@ Search requests can be defined and the software will automatically send an email
 
 ## Prerequisites
 
-1. [x] Docker installed on your machine
-2. [x] A Gmail account
+1. [x] `docker` installed on your machine
+2. [x] `docker-compose` installed on your machine
+3. [x] A Gmail account with API access activates and your API key
 
 ## How to start the application
 
@@ -19,7 +20,7 @@ The following command can be used to automatically start and configure the appli
 
 ```
 $ chmod a+rx start.sh
-$ ./start.sh
+$ sudo ./start.sh
 ```
 
 **Windows CMD:**

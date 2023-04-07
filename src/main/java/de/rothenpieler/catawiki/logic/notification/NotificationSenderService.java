@@ -4,17 +4,29 @@ import de.rothenpieler.catawiki.model.catawiki.AuctionItem;
 import de.rothenpieler.catawiki.model.notification.NewInterestingCarsAreOnlineNotification;
 import de.rothenpieler.catawiki.model.notification.TimeIsRunningUpNotification;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@Slf4j
 public class NotificationSenderService {
+
+    @Value("${gmail.apikey}")
+    private String gmailApiKey;
 
     @Autowired
     private InterestingAuctionItemNotificationBuilder interestingAuctionItemNotificationBuilder;
 
+    @Scheduled(fixedDelay = 1000 * 60)
     public void sendNotificationsIfRequired() {
+
+        log.info(gmailApiKey + " yolo");
 
         // load all matches for search requests
         List<AuctionItem> matchesForSearchRequests = interestingAuctionItemNotificationBuilder.findMatchesForSearchRequests();
@@ -24,7 +36,6 @@ public class NotificationSenderService {
 
         // build time is running up notification if necessary
         Optional<TimeIsRunningUpNotification> timeIsRunningUpNotification = buildTimeIsRunningUpNotificationIfNecessary(matchesForSearchRequests);
-
 
     }
 

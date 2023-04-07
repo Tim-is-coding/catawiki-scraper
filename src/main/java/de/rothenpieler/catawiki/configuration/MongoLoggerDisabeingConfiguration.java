@@ -16,8 +16,8 @@ public class MongoLoggerDisabeingConfiguration {
     @PostConstruct
     public void disableMongoDBLogging() {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-        Logger rootLogger = loggerContext.getLogger("org.mongodb");
-        rootLogger.setLevel(Level.OFF);
+        Logger rootLogger = loggerContext.getLogger("org.mongodb.driver");
+        rootLogger.setLevel(Level.WARN);
     }
 }
 

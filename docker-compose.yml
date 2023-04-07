@@ -1,6 +1,8 @@
 version: "3.7"
 services:
   api_service:
+    environment:
+      gmail_api: ${gmail_api}
     build: .
     restart: always
     ports:
