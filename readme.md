@@ -1,4 +1,4 @@
-# Scraping Catawiki API for oldtimers
+# Scraping the Catawiki.com API for oldtimers
 
 This software uses the API of catawiki.com to query for auctions.
 While the code can easily be rewritten to query all types of auctions, currently only oldtimers being queried.
@@ -8,6 +8,7 @@ Search requests can be defined and the software will automatically send an email
 ## Prerequisites
 
 1. [x] Docker installed on your machine
+2. [x] A Gmail account
 
 ## How to start the application
 
@@ -17,8 +18,8 @@ The following command can be used to automatically start and configure the appli
 **Linux or mac terminal:**
 
 ```
-    $ chmod a+rx my-script.sh
-    $ ./start.sh
+$ chmod a+rx my-script.sh
+$ ./start.sh
 ```
 
 **Windows CMD:**
@@ -41,11 +42,14 @@ This setup is intended to start a demon process that is running 24/7 on a server
 
 ### Database
 
-The data loaded into the mongodb can be inspected using MongoDB Compass. Below is an example of the "auction" document
+The software uses a NoSQL MongoDB. The database is running in an own docker image that automatically installs the latest
+version of MongoDB.
+
+All data loaded into the database can be inspected using MongoDB Compass. Below is an example of the "auction" document
 schema.
 
 ![mongo_compass_example.png](documentation%2Fmongo_compass_example.png)
-*Screenshot taken from MongoDB Compass*
+*Screenshot taken from MongoDB Compass. The tool automatically visualises the data.*
 
 ### Email notification service
 
