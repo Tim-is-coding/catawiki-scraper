@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents the auction of a car
@@ -50,5 +51,23 @@ public class AuctionItem {
 
     public void settHighestQuickBidSuggestion(Money highestQuickBidSuggestion) {
         this.highestQuickBidSuggestion = highestQuickBidSuggestion.getAmountMajorLong();
+    }
+
+    @Override
+    public String toString() {
+        return title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuctionItem that = (AuctionItem) o;
+        return id == that.id && auctionId == that.auctionId && hasReservePrice == that.hasReservePrice && Objects.equals(url, that.url) && Objects.equals(title, that.title) && Objects.equals(subTitle, that.subTitle) && Objects.equals(auctionStartingAt, that.auctionStartingAt) && Objects.equals(expertEstimate, that.expertEstimate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, auctionId, url, title, subTitle, auctionStartingAt, hasReservePrice, expertEstimate);
     }
 }

@@ -5,7 +5,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
-import de.rothenpieler.catawiki.logic.util.AuctionUtil;
+import de.rothenpieler.catawiki.logic.util.AuctionItemUtil;
 import de.rothenpieler.catawiki.model.application.CarSearchRequest;
 import de.rothenpieler.catawiki.model.catawiki.AuctionItem;
 import de.rothenpieler.catawiki.model.catawiki.Bid;
@@ -109,7 +109,7 @@ public class InterestingAuctionItemNotificationBuilder {
 
                 // STEP 2: Check if price is too high
                 for (AuctionItem auctionItem : auctionItemsWithMatchingName) {
-                    Optional<Money> reservePrice = AuctionUtil.getReservePrice(auctionItem);
+                    Optional<Money> reservePrice = AuctionItemUtil.getReservePrice(auctionItem);
                     if (reservePrice.isPresent()) {
                         boolean reservePriceNotTooHigh = reservePrice.get().isLessThan(searchRequest.getMaxPrice());
                         if (reservePriceNotTooHigh) {

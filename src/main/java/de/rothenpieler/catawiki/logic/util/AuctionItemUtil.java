@@ -3,6 +3,7 @@ package de.rothenpieler.catawiki.logic.util;
 import de.rothenpieler.catawiki.model.catawiki.AuctionItem;
 import de.rothenpieler.catawiki.model.catawiki.Bid;
 import lombok.NonNull;
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
  * @project FDZ
  * @date 02.10.2022
  */
-public class AuctionUtil {
+public class AuctionItemUtil {
 
 
     /**
@@ -103,6 +104,29 @@ public class AuctionUtil {
         }
 
         return Optional.ofNullable(max);
+    }
+
+    /**
+     * Returns the reserve price or the highest bid - whichever is higher.
+     *
+     * @param auctionItem
+     * @return
+     */
+    public static Money getReservePriceOrHigherBidIfExisting(@NonNull final AuctionItem auctionItem) {
+
+        if (auctionItem.isHasReservePrice()) {
+            if (!isReservePriceReached(auctionItem)) {
+                return getReservePrice(auctionItem).get();
+            }
+        }
+
+        Optional<Bid> highestBid = getHighestBid(auctionItem);
+        if (highestBid.isPresent()) {
+            return highestBid.get().gettAmount();
+        }
+
+        // neither a bid nor a reserve rice is given
+        return Money.of(CurrencyUnit.EUR, 0);
     }
 
 }

@@ -3,7 +3,7 @@ package de.rothenpieler.catawiki;
 import de.rothenpieler.catawiki.exception.CanNotQueryAllCarsAtAuctionException;
 import de.rothenpieler.catawiki.exception.CanNotQueryBidsException;
 import de.rothenpieler.catawiki.logic.notification.InterestingAuctionItemNotificationBuilder;
-import de.rothenpieler.catawiki.logic.notification.NotificationSenderService;
+import de.rothenpieler.catawiki.logic.notification.NotificationService;
 import de.rothenpieler.catawiki.logic.scraping.LookForNewAuctionsScrapingAction;
 import de.rothenpieler.catawiki.logic.scraping.QueryBidsOnAuctioningItemScrapingAction;
 import de.rothenpieler.catawiki.logic.util.LoggingTool;
@@ -18,7 +18,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.security.PrivateKey;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,7 +45,7 @@ public class CatawikiScraperApplication {
     private AuctionItemRepository auctionItemRepository;
 
     @Autowired
-    private NotificationSenderService notificationSenderService;
+    private NotificationService notificationService;
 
 
 
@@ -58,7 +57,7 @@ public class CatawikiScraperApplication {
 
     @Scheduled(fixedDelay = 1000 * 60)
     public void lookForInterestingCars() {
-        notificationSenderService.sendNotificationsIfRequired();
+        notificationService.sendNotificationsIfRequired();
     }
 
     /**
