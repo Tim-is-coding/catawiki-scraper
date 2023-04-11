@@ -128,8 +128,8 @@ public class NotificationService {
      * @return cars that will be sold within next 3 hours
      */
     private List<AuctionItem> findCarsThatWillBeSoldWithinNextThreeHours(List<AuctionItem> matches) {
-        final Date dateInThreeHours = new Date(Instant.now().plus(3, ChronoUnit.HOURS).toEpochMilli());
-        return matches.stream().filter(e -> getAuctionForAuctionItem(e).getEndAt().toInstant().isAfter(dateInThreeHours.toInstant())).toList();
+        Instant nowInThreeHours = Instant.now().plus(3, ChronoUnit.HOURS);
+        return matches.stream().filter(e -> getAuctionForAuctionItem(e).getEndAt().toInstant().isBefore(nowInThreeHours)).toList();
     }
 
     /**

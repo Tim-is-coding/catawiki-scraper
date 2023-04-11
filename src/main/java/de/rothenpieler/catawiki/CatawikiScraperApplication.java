@@ -55,7 +55,7 @@ public class CatawikiScraperApplication {
     }
 
 
-    @Scheduled(fixedDelay = 1000 * 60)
+    @Scheduled(fixedDelay = 1000 * 60 * 15)
     public void lookForInterestingCars() {
         notificationService.sendNotificationsIfRequired();
     }

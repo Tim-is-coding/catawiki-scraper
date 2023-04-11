@@ -7,10 +7,12 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
 import de.rothenpieler.catawiki.logic.util.AuctionItemUtil;
 import de.rothenpieler.catawiki.model.application.CarSearchRequest;
+import de.rothenpieler.catawiki.model.catawiki.Auction;
 import de.rothenpieler.catawiki.model.catawiki.AuctionItem;
 import de.rothenpieler.catawiki.model.catawiki.Bid;
 import de.rothenpieler.catawiki.mongodb.AuctionItemRepository;
 import de.rothenpieler.catawiki.mongodb.AuctionRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.*;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -121,8 +124,34 @@ public class InterestingAuctionItemNotificationBuilder {
                 }
             }
 
+            // filter out matches for wich auction has already ended
+            matches = filterOutMatchesForExpiredAuctions(matches);
+
             return new ArrayList<>(matches);
         }
+    }
+
+    private List<AuctionItem> filterOutMatchesForExpiredAuctions(List<AuctionItem> matches) {
+        List<AuctionItem> notExpiredYet = new ArrayList<>();
+
+        for (AuctionItem match : matches) {
+            if (getAuctionForAuctionItem(match).getEndAt().toInstant().isAfter(Instant.now())) {
+                notExpiredYet.add(match);
+            }
+        }
+
+
+        return notExpiredYet;
+    }
+
+    /**
+     * Loads the auction for the given auction item from the MongoDB.
+     *
+     * @param auctionItem
+     * @return
+     */
+    private Auction getAuctionForAuctionItem(@NonNull AuctionItem auctionItem) {
+        return auctionRepository.findById(auctionItem.getAuctionId()).orElseThrow(() -> new IllegalStateException("Can Not find auction for auction item " + auctionItem));
     }
 
 }

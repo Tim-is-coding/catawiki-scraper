@@ -26,7 +26,7 @@ public class LoggingTool {
             bareDone.append(icon);
         }
         String bareRemain = bare.substring(remainProcent);
-        log.info("\r" + bareDone + bareRemain + " " + remainProcent * 10 + "%");
+        log.info("" + bareDone + bareRemain + " " + remainProcent * 10 + "%");
         if (remain == total) {
             log.info("\n");
         }
