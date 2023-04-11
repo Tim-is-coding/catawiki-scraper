@@ -5,6 +5,8 @@ import de.rothenpieler.catawiki.model.catawiki.AuctionItem;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 import java.util.Date;
 import java.util.List;
@@ -40,12 +42,15 @@ public class Notification {
             case NEW_OLDTIMERS_ONLINE_NOTIFICATION -> {
                 sb.append("Es werden " + auctionItems.size() + " Oldtimer zu einem potentiell gutem Mindestpreis versteigert.\n\n");
 
+                int counter = 1;
                 for (AuctionItem auctionItem : auctionItems) {
-                    sb.append(auctionItem.getTitle());
+                    sb.append(" [Inserat Nr. " + counter++ + "] ");
                     if (auctionItem.isHasReservePrice()) {
-                        sb.append("     Mindestpreis " + AuctionItemUtil.getReservePrice(auctionItem).get());
+                        sb.append("Mindestgebot " + AuctionItemUtil.getReservePrice(auctionItem).orElse(Money.of(CurrencyUnit.EUR, 0)));
                     }
-                    sb.append("   ---->    " + auctionItem.getUrl());
+
+                    sb.append("      " + auctionItem.getTitle());
+                    sb.append(" ( " + auctionItem.getUrl() + " )");
                     sb.append("\n");
                 }
             }
