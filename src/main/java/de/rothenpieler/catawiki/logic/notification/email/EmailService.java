@@ -24,7 +24,7 @@ public class EmailService {
     private String emailUsername;
 
     @Value("${email.password}")
-    private String emailPassword; // 2RTJGbbZ5VZMPYM
+    private String emailPassword;
 
     /**
      * Sends an email using gmx/SMTP for the given notification
@@ -35,6 +35,7 @@ public class EmailService {
     public void sendNotificationViaEmail(@NonNull Notification notification) throws CanNotSendNotificationViaEmailException {
         try {
             log.debug("Sending notification " + notification);
+            log.info(emailUsername);
             sendNotificationViaGmx(notification);
             log.info("Successfully send gmx notification");
         } catch (
