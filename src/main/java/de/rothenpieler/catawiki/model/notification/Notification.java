@@ -47,6 +47,8 @@ public class Notification {
                     sb.append(" [Inserat Nr. " + counter++ + "] ");
                     if (auctionItem.isHasReservePrice()) {
                         sb.append("Mindestgebot " + AuctionItemUtil.getReservePrice(auctionItem).orElse(Money.of(CurrencyUnit.EUR, 0)));
+                    } else {
+                        sb.append("Kein Mindestpreis gefordert");
                     }
 
                     sb.append("      " + auctionItem.getTitle());
@@ -85,8 +87,8 @@ public class Notification {
             }
             case AUCTION_WILL_END_SOON_NOTIFICATION -> {
                 if (auctionItems.size() == 1) {
-                    return auctionItems.get(0).getTitle() + " ist gleich bei " +
-                            AuctionItemUtil.getReservePriceOrHigherBidIfExisting(auctionItems.get(0)) + " versteigert worden";
+                    return "Bei " + AuctionItemUtil.getReservePriceOrHigherBidIfExisting(auctionItems.get(0)) + " ist " + auctionItems.get(0).getTitle() + " gleich "
+                            + "versteigert worden";
                 }
                 return auctionItems.size() + " Oldtimer sind gleich zu einem potentiell gutem Mindestpreis versteigert worden";
 
