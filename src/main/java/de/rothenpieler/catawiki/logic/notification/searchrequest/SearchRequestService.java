@@ -1,4 +1,4 @@
-package de.rothenpieler.catawiki.logic.notification;
+package de.rothenpieler.catawiki.logic.notification.searchrequest;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -35,7 +35,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  */
 @Slf4j
 @Service
-public class InterestingAuctionItemNotificationBuilder {
+public class SearchRequestService {
 
     @Autowired
     private AuctionRepository auctionRepository;

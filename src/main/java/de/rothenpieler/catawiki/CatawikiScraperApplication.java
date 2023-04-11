@@ -2,7 +2,7 @@ package de.rothenpieler.catawiki;
 
 import de.rothenpieler.catawiki.exception.CanNotQueryAllCarsAtAuctionException;
 import de.rothenpieler.catawiki.exception.CanNotQueryBidsException;
-import de.rothenpieler.catawiki.logic.notification.InterestingAuctionItemNotificationBuilder;
+import de.rothenpieler.catawiki.logic.notification.searchrequest.SearchRequestService;
 import de.rothenpieler.catawiki.logic.notification.NotificationService;
 import de.rothenpieler.catawiki.logic.scraping.LookForNewAuctionsScrapingAction;
 import de.rothenpieler.catawiki.logic.scraping.QueryBidsOnAuctioningItemScrapingAction;
@@ -36,7 +36,7 @@ public class CatawikiScraperApplication {
 
 
     @Autowired
-    private InterestingAuctionItemNotificationBuilder notificationBuilder;
+    private SearchRequestService notificationBuilder;
 
     @Autowired
     private AuctionRepository auctionRepository;
@@ -46,7 +46,6 @@ public class CatawikiScraperApplication {
 
     @Autowired
     private NotificationService notificationService;
-
 
 
     public static void main(String[] args) {
@@ -70,7 +69,7 @@ public class CatawikiScraperApplication {
     @Scheduled(fixedDelay = 1000 * 60 * 60 * 3) // 3 hours
     public void collectData() throws CanNotQueryAllCarsAtAuctionException, CanNotQueryBidsException, InterruptedException {
 
-        log.info("Updating data...");
+        log.debug("Updating data...");
 
         List<Auction> auctions =
                 new LookForNewAuctionsScrapingAction().queryAllRunningAuctions();
@@ -91,7 +90,9 @@ public class CatawikiScraperApplication {
                 counter++;
             }
 
-            LoggingTool.logProgressInPercentage(counter, totalBids.get());
+            if (log.isInfoEnabled()) {
+                LoggingTool.logProgressInPercentage(counter, totalBids.get());
+            }
 
             // save data to MongoDB. UpdATES/INSERTS automatically
             auctionRepository.save(auction);

@@ -1,7 +1,8 @@
 package de.rothenpieler.catawiki.logic.notification;
 
 import de.rothenpieler.catawiki.exception.CanNotSendNotificationViaEmailException;
-import de.rothenpieler.catawiki.logic.notification.email.GmailService;
+import de.rothenpieler.catawiki.logic.notification.email.EmailService;
+import de.rothenpieler.catawiki.logic.notification.searchrequest.SearchRequestService;
 import de.rothenpieler.catawiki.model.catawiki.Auction;
 import de.rothenpieler.catawiki.model.catawiki.AuctionItem;
 import de.rothenpieler.catawiki.model.notification.Notification;
@@ -11,7 +12,6 @@ import de.rothenpieler.catawiki.mongodb.NotificationRepository;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -32,13 +32,10 @@ public class NotificationService {
     private AuctionRepository auctionRepository;
 
     @Autowired
-    private GmailService gmailService;
-
-    @Value("${gmail.apikey}")
-    private String gmailApiKey;
+    private EmailService emailService;
 
     @Autowired
-    private InterestingAuctionItemNotificationBuilder interestingAuctionItemNotificationBuilder;
+    private SearchRequestService searchRequestService;
 
     private List<Notification> alreadySentNotifications;
 
@@ -50,7 +47,7 @@ public class NotificationService {
         updateNotificationCache();
 
         // load all matches for search requests
-        List<AuctionItem> matchesForSearchRequests = interestingAuctionItemNotificationBuilder.findMatchesForSearchRequests();
+        List<AuctionItem> matchesForSearchRequests = searchRequestService.findMatchesForSearchRequests();
 
         log.debug("Found {} matches for the current search requests", matchesForSearchRequests.size());
 
@@ -80,7 +77,7 @@ public class NotificationService {
 
         try {
             // send email
-            gmailService.sendNotificationViaEmail(notification);
+            emailService.sendNotificationViaEmail(notification);
         } catch (CanNotSendNotificationViaEmailException e) {
             log.error("Can not send email notification.", e);
             return;

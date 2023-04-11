@@ -2,7 +2,8 @@ version: "3.7"
 services:
   api_service:
     environment:
-      gmail_api: ${gmail_api}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
     build: .
     restart: always
     depends_on:
