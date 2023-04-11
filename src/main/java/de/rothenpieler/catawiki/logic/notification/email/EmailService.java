@@ -35,7 +35,7 @@ public class EmailService {
     public void sendNotificationViaEmail(@NonNull Notification notification) throws CanNotSendNotificationViaEmailException {
         try {
             log.debug("Sending notification " + notification);
-            log.info(emailUsername);
+            log.info("username is " + emailUsername);
             sendNotificationViaGmx(notification);
             log.info("Successfully send gmx notification");
         } catch (
