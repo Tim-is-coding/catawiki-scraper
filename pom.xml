@@ -6,7 +6,7 @@
 
     <groupId>de.rothenpieler.catawiki</groupId>
     <artifactId>catawiki-scraper</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Catawiki data scraper</name>
 
     <parent>
