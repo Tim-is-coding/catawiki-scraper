@@ -19,7 +19,7 @@
         </encoder>
     </appender>
 
-    <logger name="de.rothenpieler" level="info" additivity="false">
+    <logger name="de.rothenpieler" level="info" additivity="true">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>

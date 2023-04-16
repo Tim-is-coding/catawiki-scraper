@@ -54,7 +54,7 @@ public class CatawikiScraperApplication {
     }
 
 
-    @Scheduled(fixedDelay = 1000 * 60 * 15)
+    @Scheduled(fixedDelay = 1000 * 60 * 15) // 15 minutes
     public void lookForInterestingCars() {
         notificationService.sendNotificationsIfRequired();
     }
@@ -98,7 +98,11 @@ public class CatawikiScraperApplication {
             auctionRepository.save(auction);
         }
 
-        log.info("Update done!");
+        log.debug("Update done!");
+    }
+
+    private void addSearchRequestsStatically(){
+        log.debug("Adding static search requests as long as UI is not developed yet");
 
     }
 

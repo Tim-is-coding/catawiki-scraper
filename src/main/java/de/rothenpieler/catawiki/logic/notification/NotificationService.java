@@ -41,7 +41,7 @@ public class NotificationService {
 
     public void sendNotificationsIfRequired() {
 
-        log.debug("Scanning database to look for potential new notifications");
+        log.info("Scanning database to look for potential new notifications");
 
         // pull latest data about already sent notifications from database to avoid sending same notifications again
         updateNotificationCache();
